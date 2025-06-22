@@ -118,33 +118,6 @@
                                         <div class="invalid-feedback d-block">{{ $message }}</div>
                                     @enderror
                                 </div>
-
-                                <div class="col-12">
-                                    <label class="form-label mb-2">Pilih Keluhan</label>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="message[]" value="Flu" id="flu" {{ is_array(old('message')) && in_array('Flu', old('message')) ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="flu">Flu</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="message[]" value="Batuk" id="batuk" {{ is_array(old('message')) && in_array('Batuk', old('message')) ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="batuk">Batuk</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="message[]" value="Pilek" id="pilek" {{ is_array(old('message')) && in_array('Pilek', old('message')) ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="pilek">Pilek</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="message[]" value="Demam" id="demam" {{ is_array(old('message')) && in_array('Demam', old('message')) ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="demam">Demam</label>
-                                    </div>
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="checkbox" name="message[]" value="Sakit Perut" id="sakitperut" {{ is_array(old('message')) && in_array('Sakit Perut', old('message')) ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="sakitperut">Sakit Perut</label>
-                                    </div>
-                                    @error('message')
-                                        <div class="invalid-feedback d-block">{{ $message }}</div>
-                                    @enderror
-                                </div>
                                 <div class="col-12">
                                     <button class="btn btn-primary w-100 py-3" type="submit">Booking Sekarang</button>
                                 </div>

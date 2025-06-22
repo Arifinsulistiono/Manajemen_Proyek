@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transactions', function (Blueprint $table) {
+        Schema::create('obat_resep', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('appointment_id')->constrained()->onDelete('cascade');
-            $table->string('invoice_code')->unique();
-            $table->decimal('amount', 10, 2);
-            $table->enum('status', ['Belum Lunas', 'Lunas'])->default('Belum Lunas');
+            $table->foreignId('resep_id')->constrained()->onDelete('cascade');
+            $table->foreignId('obat_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transactions');
+        Schema::dropIfExists('obat_resep');
     }
 };

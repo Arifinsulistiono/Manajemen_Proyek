@@ -31,5 +31,6 @@ public function create()
 
     return redirect()->route('diagnosa')->with('success', 'Diagnosa berhasil disimpan.');
 }
+
 }
 

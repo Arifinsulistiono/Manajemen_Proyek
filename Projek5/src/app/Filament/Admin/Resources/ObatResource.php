@@ -29,8 +29,12 @@ class ObatResource extends Resource
                 Forms\Components\TextInput::make('harga')
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('status')
-                    ->required(),
+                Forms\Components\Select::make('status')
+                    ->required()
+                    ->options([
+                        'Sebelum Makan' => 'Sebelum Makan',
+                        'Sesudah Makan' => 'Sesudah Makan',
+                    ])
             ]);
     }
 
@@ -43,7 +47,13 @@ class ObatResource extends Resource
                 Tables\Columns\TextColumn::make('harga')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('status'),
+                Tables\Columns\BadgeColumn::make('status')
+                    ->label('Status')
+                    ->colors([
+                        'primary' => 'Sebelum Makan',
+                        'success' => 'Sesudah Makan',
+                    ])
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

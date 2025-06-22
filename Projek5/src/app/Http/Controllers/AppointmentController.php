@@ -9,7 +9,7 @@ use App\Models\Dokter;
 
 class AppointmentController extends Controller
 {
-    public function store(Request $request)
+     public function store(Request $request)
     {
         $request->validate([
             'nama' => 'required|string|max:255',
@@ -18,7 +18,6 @@ class AppointmentController extends Controller
             'date' => 'required|date',
             'time' => 'required',
             'dokter_id' => 'required|exists:dokters,id',
-            'message' => 'required|array|min:1',
         ]);
 
         Appointment::create([
@@ -28,7 +27,7 @@ class AppointmentController extends Controller
             'date' => $request->date,
             'time' => $request->time,
             'dokter_id' => $request->dokter_id,
-            'message' => implode(', ', $request->message),
+            'status' => 'pending', // Default
         ]);
 
         return redirect()->back()->with('success', 'Janji temu berhasil dibuat!');

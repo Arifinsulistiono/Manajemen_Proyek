@@ -24,7 +24,7 @@ class DiagnosaResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('appointment_id')
-                    ->label('Pasien')
+                    ->label('Nama Pasien')
                     ->relationship('appointment', 'nama') // ganti sesuai kolom nama pasien
                     ->searchable()
                     ->required(),
@@ -40,10 +40,9 @@ class DiagnosaResource extends Resource
                     ->columnSpanFull(),
 
                 Forms\Components\Select::make('status')
-                    ->required()
                     ->options([
-                        'Belum Diperiksa' => 'Belum Diperiksa',
-                        'Sudah Diperiksa' => 'Sudah Diperiksa',
+                        'Belum diperiksa' => 'Belum diperiksa',
+                        'Sudah diperiksa' => 'Sudah diperiksa',
                     ])
                     ->label('Status')
                     ->native(false),

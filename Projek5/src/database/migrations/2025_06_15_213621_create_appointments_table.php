@@ -18,7 +18,7 @@ return new class extends Migration
         $table->string('mobile');
         $table->date('date');
         $table->time('time');
-        $table->text('message'); // tipe text jika menyimpan banyak keluhan
+        $table->string('status')->default('pending');
         $table->timestamps();
         });
     }

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('appointment_id'); // Foreign Key ke appointments
             $table->unsignedBigInteger('dokter_id'); // Foreign Key ke dokters
             $table->text('keluhan')->nullable();
-            $table->enum('status', ['Belum diperiksa', 'Sudah diperiksa'])->default('belum diperiksa');
+            $table->enum('status', ['Belum diperiksa', 'Sudah diperiksa'])->default('Belum diperiksa');
             $table->timestamps();
 
             // Foreign key constraints

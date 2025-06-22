@@ -3,6 +3,7 @@
 namespace App\Filament\Admin\Resources;
 
 use App\Filament\Admin\Resources\DokterResource\Pages;
+use App\Filament\Admin\Resources\DokterResource\RelationManagers;
 use App\Models\Dokter;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -10,6 +11,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class DokterResource extends Resource
 {
@@ -22,17 +24,12 @@ class DokterResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('nama')
-                    ->label('Nama')
                     ->required()
                     ->maxLength(255),
-
                 Forms\Components\TextInput::make('spesialis')
-                    ->label('Spesialis')
                     ->maxLength(255)
                     ->default(null),
-
                 Forms\Components\FileUpload::make('foto')
-                    ->label('Foto')
                     ->image(),
 
                 Forms\Components\TextInput::make('harga_jasa')
@@ -49,29 +46,19 @@ class DokterResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('nama')
-                    ->label('Nama')
                     ->searchable(),
-
                 Tables\Columns\TextColumn::make('spesialis')
-                    ->label('Spesialis')
                     ->searchable(),
-
-                Tables\Columns\ImageColumn::make('foto')
-                    ->label('Foto'),
-
+                Tables\Columns\ImageColumn::make('foto'),
                 Tables\Columns\TextColumn::make('harga_jasa')
                     ->label('Harga Jasa')
                     ->money('IDR', true)
                     ->sortable(),
-
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Dibuat')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->label('Diubah')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

@@ -16,21 +16,25 @@ class Appointment extends Model
         'mobile',
         'date',
         'time',
-        'message',
+        'status',
         'dokter_id'
     ];
 
     protected static function booted(): void
     {
         static::created(function ($appointment) {
-            Diagnosa::create([
-                'appointment_id' => $appointment->id,
-                'dokter_id' => $appointment->dokter_id,
-                'keluhan' => $appointment->message ?? '',
-                'status' => 'Belum Diperiksa',
-            ]);
+            if ($appointment->status === 'approved') {
+                Diagnosa::create([
+                    'appointment_id' => $appointment->id,
+                    'dokter_id' => $appointment->dokter_id,
+                    'keluhan' => $appointment->message ?? '',
+                    'status' => 'Belum Diperiksa',
+                ]);
+            }
         });
     }
+
+
 
     public function transaction()
     {

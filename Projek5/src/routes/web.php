@@ -30,7 +30,7 @@ Route::view('/causes', 'frontend.causes')->name('causes');
 Route::view('/diagnosa', 'frontend.diagnosa')->name('diagnosa');
 Route::view('/appointment', 'frontend.appointment')->name('appointment');
 Route::view('/team', 'frontend.team')->name('team');
-Route::view('/testimonial', 'frontend.testimonial')->name('testimonial');
+Route::view('/payment', 'frontend.payment')->name('payment');
 Route::view('/contact', 'frontend.contact')->name('contact');
 Route::view('/404', 'frontend.404')->name('404');
 
@@ -38,7 +38,6 @@ Route::view('/404', 'frontend.404')->name('404');
 Route::post('/appointment', [AppointmentController::class, 'store'])->name('appointment.store'); // Untuk menyimpan appointment dari form
 Route::get('/admin/appointments/{id}', [AppointmentController::class, 'show'])->name('admin.appointments.show'); // (Opsional) Detail per appointment
 Route::get('/appointment', [AppointmentController::class, 'create'])->name('appointment.create');
-
 
 // HomeController
 Route::get('/', [HomeController::class, 'index']);
@@ -55,7 +54,6 @@ Route::get('/diagnosa/create', [DiagnosaController::class, 'create'])->name('dia
 Route::get('/appointments', [AppointmentController::class, 'index']);
 Route::get('/dokters', [DokterController::class, 'index']);
 });
-
 
 Route::middleware(['auth', 'role:dokter'])->prefix('dokter')->group(function () {
     Route::get('/diagnosa/create', [DiagnosaController::class, 'create'])->name('diagnosa.create');

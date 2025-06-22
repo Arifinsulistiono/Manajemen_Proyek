@@ -35,7 +35,7 @@
                 <a href="{{ url('/about') }}" class="nav-item nav-link {{ Request::is('about') ? 'active' : '' }}">About</a>
                 <a href="{{ url('/team') }}" class="nav-item nav-link {{ Request::is('team') ? 'active' : '' }}">Doctor</a>
                 <a href="{{ url('/contact') }}" class="nav-item nav-link {{ Request::is('contact') ? 'active' : '' }}">Contact</a>
-                <a href="{{ url('/feature') }}" class="nav-item nav-link {{ Request::is('feature') ? 'active' : '' }}">Transaction</a>
+                <a href="{{ url('/payment') }}" class="nav-item nav-link {{ Request::is('payment') ? 'active' : '' }}">Payment</a>
             </div>
             <div class="d-none d-lg-flex ms-3">
                 <a class="btn btn-primary d-flex align-items-center justify-content-center px-4 py-2 rounded-pill text-white" style="height: 60px;" href="{{ url('/appointment') }}">
