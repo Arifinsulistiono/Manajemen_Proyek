@@ -30,7 +30,7 @@ class TransactionResource extends Resource
                     ->label('Pasien')
                     ->relationship('appointment', 'nama')
                     ->searchable()
-                    ->live() // agar bisa trigger reactive change
+                    ->live()
                     ->required()
                     ->afterStateUpdated(function ($state, callable $set) {
                         $appointment = \App\Models\Appointment::find($state);
@@ -45,7 +45,7 @@ class TransactionResource extends Resource
                 Forms\Components\TextInput::make('invoice_code')
                     ->label('Kode Invoice (Otomatis)')
                     ->disabled()
-                    ->dehydrated() // biar tetap dikirim ke model
+                    ->dehydrated()
                     ->required(),
 
                 Forms\Components\TextInput::make('amount')
@@ -69,16 +69,15 @@ class TransactionResource extends Resource
                     ->options([
                         'BCA' => 'Transfer BCA',
                         'MANDIRI' => 'Transfer Mandiri',
-                        'QRIS' => 'QRIS',
-                        'CASH' => 'Cash di Kasir',
+                        'DANA' => 'Dana',
                     ])
                     ->required()
                     ->searchable(),
 
                 FileUpload::make('bukti_pembayaran')
                     ->label('Bukti Pembayaran')
-                    ->directory('bukti') // folder di storage/app/public/bukti
-                    ->image() // hanya file gambar
+                    ->directory('bukti')
+                    ->image()
                     ->preserveFilenames()
                     ->enableDownload()
                     ->enableOpen()
@@ -111,21 +110,19 @@ class TransactionResource extends Resource
                 Tables\Columns\TextColumn::make('total_tagihan')
                     ->label('Total Tagihan')
                     ->money('IDR', true),
-                
-                    
-                    
+
                 Tables\Columns\BadgeColumn::make('status')
+                    ->label('Status')
                     ->colors([
                         'danger' => 'Belum Lunas',
                         'success' => 'Lunas',
-                        ])
-                        ->label('Status'),
+                    ]),
 
                 Tables\Columns\TextColumn::make('payment_method')
-                        ->label('Metode Pembayaran')
-                        ->sortable()
-                        ->searchable(),
-                        
+                    ->label('Metode Pembayaran')
+                    ->sortable()
+                    ->searchable(),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Tanggal')
                     ->dateTime()
@@ -136,8 +133,8 @@ class TransactionResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                
-                  ImageColumn::make('bukti_pembayaran')
+
+                ImageColumn::make('bukti_pembayaran')
                     ->label('Bukti')
                     ->disk('public')
                     ->height(80),

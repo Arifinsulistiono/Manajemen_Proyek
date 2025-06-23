@@ -57,16 +57,25 @@
                                 @csrf
                                 <div class="mb-2">
                                     <label>Metode Pembayaran</label>
-                                    <select name="payment_method" class="form-select" required>
+                                    <select name="payment_method" class="form-select" id="paymentMethod-{{ $appointment->id }}" required>
                                         <option value="">-- Pilih --</option>
                                         <option value="BCA">Transfer BCA</option>
                                         <option value="MANDIRI">Transfer Mandiri</option>
-                                        <option value="QRIS">QRIS</option>
-                                        <option value="CASH">Cash</option>
+                                        <option value="DANA">Dana</option>
                                     </select>
                                 </div>
+
+                                <div class="mb-2" id="rekeningInfo-{{ $appointment->id }}" style="display: none;">
+                                    <div class="alert alert-info">
+                                        <strong>Transfer ke:</strong><br>
+                                        <span id="namaBank-{{ $appointment->id }}"></span><br>
+                                        <span id="noRek-{{ $appointment->id }}"></span><br>
+                                        <span id="atasNama-{{ $appointment->id }}"></span>
+                                    </div>
+                                </div>
+
                                 <div class="mb-2">
-                                    <label>Upload Bukti (jika non-cash)</label>
+                                    <label>Upload Bukti Pembayaran</label>
                                     <input type="file" name="bukti_pembayaran" class="form-control">
                                 </div>
                                 <button class="btn btn-success">Bayar & Cetak Invoice</button>
@@ -83,3 +92,49 @@
     @endif
 </div>
 @endsection
+
+@push('scripts')
+@if(isset($appointments))
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        @foreach($appointments as $appointment)
+            const select{{ $appointment->id }} = document.getElementById('paymentMethod-{{ $appointment->id }}');
+            const rekeningInfo{{ $appointment->id }} = document.getElementById('rekeningInfo-{{ $appointment->id }}');
+            const bank{{ $appointment->id }} = document.getElementById('namaBank-{{ $appointment->id }}');
+            const norek{{ $appointment->id }} = document.getElementById('noRek-{{ $appointment->id }}');
+            const atasnama{{ $appointment->id }} = document.getElementById('atasNama-{{ $appointment->id }}');
+
+            const dataRekening = {
+                BCA: {
+                    bank: 'Bank BCA',
+                    norek: '1234567890',
+                    nama: 'Klinik SehatLah'
+                },
+                MANDIRI: {
+                    bank: 'Bank Mandiri',
+                    norek: '9876543210',
+                    nama: 'Klinik SehatLah'
+                },
+                DANA: {
+                    bank: 'Dana eWallet',
+                    norek: '081234567890',
+                    nama: 'Klinik SehatLah'
+                }
+            };
+
+            select{{ $appointment->id }}.addEventListener('change', function () {
+                const val = this.value;
+                if (dataRekening[val]) {
+                    rekeningInfo{{ $appointment->id }}.style.display = 'block';
+                    bank{{ $appointment->id }}.textContent = 'Metode: ' + dataRekening[val].bank;
+                    norek{{ $appointment->id }}.textContent = 'No: ' + dataRekening[val].norek;
+                    atasnama{{ $appointment->id }}.textContent = 'Atas Nama: ' + dataRekening[val].nama;
+                } else {
+                    rekeningInfo{{ $appointment->id }}.style.display = 'none';
+                }
+            });
+        @endforeach
+    });
+</script>
+@endif
+@endpush

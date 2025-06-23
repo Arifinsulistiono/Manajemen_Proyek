@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('nama');
             $table->integer('harga');
+            $table->string('kategori');
+            $table->text('deskripsi');
             $table->enum('status', ['Sebelum Makan', 'Sesudah Makan']);
             $table->timestamps();
         });
