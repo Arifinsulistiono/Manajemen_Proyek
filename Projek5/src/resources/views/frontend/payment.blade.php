@@ -1,51 +1,85 @@
 @extends('layouts.app')
 
-@section('title', 'Pembayaran | Klinik Bersama')
+@section('title', 'Payment | Klinik SehatLah')
 
 @section('content')
-<div class="container py-5">
-    <h1 class="mb-4">Pembayaran Appointment</h1>
+<div class="container my-5">
+    <h2 class="text-center text-primary fw-bold">Cek dan Bayar Tagihan</h2>
+    <p class="text-center text-muted mb-4">Masukkan email Anda untuk melihat detail tagihan kunjungan</p>
 
-    @if(session('success'))
-        <div class="alert alert-success text-center">{{ session('success') }}</div>
-    @endif
+    @if(session('error')) <div class="alert alert-danger">{{ session('error') }}</div> @endif
+    @if(session('success')) <div class="alert alert-success">{{ session('success') }}</div> @endif
 
-    <div class="card mb-4">
-        <div class="card-header">
-            <strong>Detail Appointment</strong>
-        </div>
-        <div class="card-body">
-            <p><strong>Nama Pasien:</strong> {{ $appointment->name }}</p>
-            <p><strong>Dokter:</strong> {{ $appointment->doctor }}</p>
-            <p><strong>Tanggal & Waktu:</strong> {{ $appointment->date }} {{ $appointment->time }}</p>
-            <p><strong>Keluhan:</strong> {{ $appointment->message }}</p>
-        </div>
-    </div>
-
-    <div class="card mb-4">
-        <div class="card-header">
-            <strong>Detail Transaksi</strong>
-        </div>
-        <div class="card-body">
-            <p><strong>Kode Invoice:</strong> {{ $transaction->invoice_code }}</p>
-            <p><strong>Tagihan:</strong> Rp {{ number_format($transaction->amount, 0, ',', '.') }}</p>
-            <p><strong>Status:</strong>
-                @if($transaction->status == 'paid')
-                    <span class="badge bg-success">Lunas</span>
-                @else
-                    <span class="badge bg-warning text-dark">Belum Lunas</span>
-                @endif
-            </p>
-        </div>
-    </div>
-
-    @if($transaction->status != 'paid')
-        <form action="{{ route('appointment.pay', $appointment->id) }}" method="POST">
+    @if(!isset($appointments))
+        <form action="{{ route('appointment.payment.email') }}" method="POST" class="card p-4 shadow-sm">
             @csrf
-            <button type="submit" class="btn btn-primary w-100 py-2">Bayar Sekarang</button>
+            <div class="mb-3">
+                <label for="email">Alamat Email</label>
+                <input type="email" name="email" class="form-control" required>
+            </div>
+            <button class="btn btn-primary w-100">Lihat Tagihan</button>
         </form>
     @else
-        <div class="alert alert-success text-center">Terima kasih! Pembayaran Anda telah diterima.</div>
+        <h4 class="mb-3">Daftar Janji Temu Anda</h4>
+        @foreach($appointments as $appointment)
+            @php
+                $obats = $appointment->diagnosa->resep->obats ?? collect();
+                $hargaObat = $obats->sum('harga');
+                $hargaJasa = $appointment->dokter->harga_jasa ?? 0;
+                $total = $hargaObat + $hargaJasa;
+                $transaction = $appointment->transaction;
+            @endphp
+
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header d-flex justify-content-between">
+                    <strong><i class="bi bi-receipt"></i> {{ $appointment->date }} - {{ $appointment->time }}</strong>
+                    <span class="badge bg-{{ $transaction->status == 'Lunas' ? 'success' : 'danger' }}">{{ $transaction->status }}</span>
+                </div>
+                <div class="card-body">
+                    <p>Nama Pasien: <strong>{{ $appointment->nama }}</strong></p>
+                    <p>Jasa Dokter: Rp {{ number_format($hargaJasa, 0, ',', '.') }}</p>
+                    <p>Obat:
+                        @forelse($obats as $obat)
+                            <span class="badge bg-info text-dark">{{ $obat->nama }}</span>
+                        @empty
+                            <em>Tidak ada</em>
+                        @endforelse
+                    </p>
+                    <p>Harga Obat: Rp {{ number_format($hargaObat, 0, ',', '.') }}</p>
+                    <p>Total Tagihan: <strong class="text-danger">Rp {{ number_format($total, 0, ',', '.') }}</strong></p>
+
+                    @if($transaction->status == 'Belum Lunas')
+                        <button class="btn btn-outline-success" type="button" data-bs-toggle="collapse" data-bs-target="#pay-{{ $appointment->id }}">
+                            Bayar Sekarang
+                        </button>
+                        <div class="collapse mt-3" id="pay-{{ $appointment->id }}">
+                            <form action="{{ route('appointment.pay', $appointment->id) }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <div class="mb-2">
+                                    <label>Metode Pembayaran</label>
+                                    <select name="payment_method" class="form-select" required>
+                                        <option value="">-- Pilih --</option>
+                                        <option value="BCA">Transfer BCA</option>
+                                        <option value="MANDIRI">Transfer Mandiri</option>
+                                        <option value="QRIS">QRIS</option>
+                                        <option value="CASH">Cash</option>
+                                    </select>
+                                </div>
+                                <div class="mb-2">
+                                    <label>Upload Bukti (jika non-cash)</label>
+                                    <input type="file" name="bukti_pembayaran" class="form-control">
+                                </div>
+                                <button class="btn btn-success">Bayar & Cetak Invoice</button>
+                            </form>
+                        </div>
+                    @else
+                        <a href="{{ route('appointment.payment.invoice', $appointment->id) }}" class="btn btn-secondary">
+                            Download Invoice
+                        </a>
+                    @endif
+                </div>
+            </div>
+        @endforeach
     @endif
 </div>
 @endsection

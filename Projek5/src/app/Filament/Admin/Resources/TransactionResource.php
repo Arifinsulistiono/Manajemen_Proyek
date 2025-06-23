@@ -9,6 +9,8 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Forms\Components\FileUpload;
 use Illuminate\Support\Str;
 
 class TransactionResource extends Resource
@@ -61,6 +63,27 @@ class TransactionResource extends Resource
                     ])
                     ->required()
                     ->default('Belum Lunas'),
+
+                Forms\Components\Select::make('payment_method')
+                    ->label('Metode Pembayaran')
+                    ->options([
+                        'BCA' => 'Transfer BCA',
+                        'MANDIRI' => 'Transfer Mandiri',
+                        'QRIS' => 'QRIS',
+                        'CASH' => 'Cash di Kasir',
+                    ])
+                    ->required()
+                    ->searchable(),
+
+                FileUpload::make('bukti_pembayaran')
+                    ->label('Bukti Pembayaran')
+                    ->directory('bukti') // folder di storage/app/public/bukti
+                    ->image() // hanya file gambar
+                    ->preserveFilenames()
+                    ->enableDownload()
+                    ->enableOpen()
+                    ->visibility('public')
+                    ->columnSpan('full'),
             ]);
     }
 
@@ -88,14 +111,21 @@ class TransactionResource extends Resource
                 Tables\Columns\TextColumn::make('total_tagihan')
                     ->label('Total Tagihan')
                     ->money('IDR', true),
-
+                
+                    
+                    
                 Tables\Columns\BadgeColumn::make('status')
                     ->colors([
                         'danger' => 'Belum Lunas',
                         'success' => 'Lunas',
-                    ])
-                    ->label('Status'),
+                        ])
+                        ->label('Status'),
 
+                Tables\Columns\TextColumn::make('payment_method')
+                        ->label('Metode Pembayaran')
+                        ->sortable()
+                        ->searchable(),
+                        
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Tanggal')
                     ->dateTime()
@@ -106,6 +136,11 @@ class TransactionResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                
+                  ImageColumn::make('bukti_pembayaran')
+                    ->label('Bukti')
+                    ->disk('public')
+                    ->height(80),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

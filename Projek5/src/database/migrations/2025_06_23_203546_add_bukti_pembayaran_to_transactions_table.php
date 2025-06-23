@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('obat_resep', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('resep_id')->constrained()->onDelete('cascade');
-            $table->foreignId('obat_id')->constrained()->onDelete('cascade');
-            $table->timestamps();
+        Schema::table('transactions', function (Blueprint $table) {
+            $table->string('bukti_pembayaran')
+                ->nullable()
+                ->after('payment_method'); // letakkan setelah kolom payment_method
         });
     }
 
@@ -24,6 +23,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('obat_resep');
+        Schema::table('transactions', function (Blueprint $table) {
+            $table->dropColumn('bukti_pembayaran');
+        });
     }
 };

@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DiagnosaController;
 use App\Http\Controllers\DokterController;
 
+
 /* NOTE: Do Not Remove
 / Livewire asset handling if using sub folder in domain
 */
@@ -38,6 +39,14 @@ Route::view('/404', 'frontend.404')->name('404');
 Route::post('/appointment', [AppointmentController::class, 'store'])->name('appointment.store'); // Untuk menyimpan appointment dari form
 Route::get('/admin/appointments/{id}', [AppointmentController::class, 'show'])->name('admin.appointments.show'); // (Opsional) Detail per appointment
 Route::get('/appointment', [AppointmentController::class, 'create'])->name('appointment.create');
+Route::get('/appointment/{id}/payment', [AppointmentController::class, 'payment'])->name('appointment.payment');
+Route::post('/appointment/{id}/pay', [AppointmentController::class, 'pay'])->name('appointment.pay');
+
+Route::get('/payment', [AppointmentController::class, 'paymentForm'])->name('appointment.payment.form');
+Route::post('/payment', [AppointmentController::class, 'paymentByEmail'])->name('appointment.payment.email');
+Route::post('/payment/pay/{id}', [AppointmentController::class, 'pay'])->name('appointment.pay');
+Route::get('/payment/invoice/{id}', [AppointmentController::class, 'invoice'])->name('appointment.payment.invoice');
+
 
 // HomeController
 Route::get('/', [HomeController::class, 'index']);

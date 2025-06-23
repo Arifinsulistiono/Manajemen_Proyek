@@ -15,6 +15,7 @@ class Transaction extends Model
         'invoice_code',
         'amount',
         'status',
+        'payment_method',
     ];
 
     protected static function booted()
