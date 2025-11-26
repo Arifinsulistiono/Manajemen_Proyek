@@ -10,6 +10,6 @@ class DokterController extends Controller
     public function index()
     {
         $dokters = Dokter::all();
-        return view('dokter.index', compact('dokters')); // arahkan ke view yang sesuai
+        return view('dokter.index', compact('dokters'));
     }
 }

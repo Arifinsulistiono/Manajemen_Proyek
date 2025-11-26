@@ -75,8 +75,9 @@
                 <div class="col-lg-6 feature-text py-5 wow fadeIn" data-wow-delay="0.1s">
                     <div class="p-lg-5 ps-lg-0">
                         <p class="d-inline-block border rounded-pill text-light py-1 px-4">Features</p>
-                        <h1 class="text-white mb-4">Why Choose Us</h1>
-                        <p class="text-white mb-4 pb-2">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo erat amet</p>
+                        <h1 class="text-white mb-4">Mengapa Memilih Kami</h1>
+                        <p class="text-white mb-4 pb-2">Kami berkomitmen memberikan pelayanan terbaik dengan mengutamakan profesionalisme, integritas, dan kepedulian terhadap setiap pasien. 
+                                                         Dengan dukungan tenaga ahli berpengalaman serta fasilitas yang memadai,kami memastikan Anda mendapatkan penanganan yang aman, nyaman, dan terpercaya.</p>
                         <div class="row g-4">
                             <div class="col-6">
                                 <div class="d-flex align-items-center">

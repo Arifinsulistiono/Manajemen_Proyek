@@ -14,7 +14,7 @@ class ResepResource extends Resource
 {
     protected static ?string $model = Resep::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
     protected static ?string $navigationLabel = 'Resep Obat';
     protected static ?string $pluralModelLabel = 'Resep';
     protected static ?string $modelLabel = 'Resep';

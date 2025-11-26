@@ -40,6 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'web_dokter' => [
+        'driver' => 'session',
+        'provider' => 'dokters', // ini harus Anda definisikan juga
+        ],
     ],
 
     /*
@@ -64,6 +68,10 @@ return [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\User::class),
         ],
+        'dokters' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\Dokter::class,
+    ],
 
         // 'users' => [
         //     'driver' => 'database',

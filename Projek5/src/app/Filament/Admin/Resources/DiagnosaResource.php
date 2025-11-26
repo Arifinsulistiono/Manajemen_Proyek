@@ -17,7 +17,10 @@ class DiagnosaResource extends Resource
 {
     protected static ?string $model = Diagnosa::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-check';
+    protected static ?string $navigationLabel = 'Diagnosa';
+    protected static ?string $pluralModelLabel = 'Diagnosa';
+    protected static ?string $modelLabel = 'Diagnosa';
 
     public static function form(Form $form): Form
     {

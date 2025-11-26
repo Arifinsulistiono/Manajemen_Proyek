@@ -235,7 +235,7 @@
 }
 
 .page-header {
-    background: url(../img/header.jpg) top center no-repeat;
+    background: url(../img/doctor.jpg) top center no-repeat;
     background-size: cover;
     text-shadow: 0 0 30px rgba(0, 0, 0, .1);
 }
@@ -516,4 +516,9 @@
 
 .footer .copyright a:hover {
     color: var(--primary);
+}
+
+.text-break {
+    word-wrap: break-word;
+    word-break: break-word;
 }

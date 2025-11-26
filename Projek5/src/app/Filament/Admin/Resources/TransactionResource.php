@@ -17,7 +17,7 @@ class TransactionResource extends Resource
 {
     protected static ?string $model = Transaction::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-credit-card';
     protected static ?string $navigationLabel = 'Transaksi';
     protected static ?string $pluralModelLabel = 'Transaksi';
     protected static ?string $modelLabel = 'Transaksi';
@@ -74,15 +74,15 @@ class TransactionResource extends Resource
                     ->required()
                     ->searchable(),
 
-                FileUpload::make('bukti_pembayaran')
+                Forms\Components\FileUpload::make('bukti_pembayaran')
                     ->label('Bukti Pembayaran')
-                    ->directory('bukti')
+                    ->directory('uploads') // ini akan menyimpan ke public/uploads
+                    ->disk('local')        // default ke public_path
+                    ->visibility('public')
                     ->image()
                     ->preserveFilenames()
                     ->enableDownload()
-                    ->enableOpen()
-                    ->visibility('public')
-                    ->columnSpan('full'),
+                    ->enableOpen(),
             ]);
     }
 
@@ -134,7 +134,7 @@ class TransactionResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
-                ImageColumn::make('bukti_pembayaran')
+                Tables\Columns\ImageColumn::make('bukti_pembayaran')
                     ->label('Bukti')
                     ->disk('public')
                     ->height(80),

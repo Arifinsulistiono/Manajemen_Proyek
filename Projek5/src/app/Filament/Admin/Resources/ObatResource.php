@@ -15,7 +15,7 @@ class ObatResource extends Resource
 {
     protected static ?string $model = Obat::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-beaker';
     protected static ?string $navigationLabel = 'Obat';
     protected static ?string $pluralModelLabel = 'Data Obat';
     protected static ?string $modelLabel = 'Obat';

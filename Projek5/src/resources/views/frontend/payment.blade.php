@@ -57,7 +57,7 @@
                                 @csrf
                                 <div class="mb-2">
                                     <label>Metode Pembayaran</label>
-                                    <select name="payment_method" class="form-select" id="paymentMethod-{{ $appointment->id }}" required>
+                                    <select name="payment_method" class="form-select payment-method" data-id="{{ $appointment->id }}" required>
                                         <option value="">-- Pilih --</option>
                                         <option value="BCA">Transfer BCA</option>
                                         <option value="MANDIRI">Transfer Mandiri</option>
@@ -97,43 +97,61 @@
 @if(isset($appointments))
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        @foreach($appointments as $appointment)
-            const select{{ $appointment->id }} = document.getElementById('paymentMethod-{{ $appointment->id }}');
-            const rekeningInfo{{ $appointment->id }} = document.getElementById('rekeningInfo-{{ $appointment->id }}');
-            const bank{{ $appointment->id }} = document.getElementById('namaBank-{{ $appointment->id }}');
-            const norek{{ $appointment->id }} = document.getElementById('noRek-{{ $appointment->id }}');
-            const atasnama{{ $appointment->id }} = document.getElementById('atasNama-{{ $appointment->id }}');
+        const dataRekening = {
+            BCA: {
+                bank: 'Bank BCA',
+                norek: '1234567890',
+                nama: 'Klinik SehatLah'
+            },
+            MANDIRI: {
+                bank: 'Bank Mandiri',
+                norek: '9876543210',
+                nama: 'Klinik SehatLah'
+            },
+            DANA: {
+                bank: 'Dana eWallet',
+                norek: '081234567890',
+                nama: 'Klinik SehatLah'
+            }
+        };
 
-            const dataRekening = {
-                BCA: {
-                    bank: 'Bank BCA',
-                    norek: '1234567890',
-                    nama: 'Klinik SehatLah'
-                },
-                MANDIRI: {
-                    bank: 'Bank Mandiri',
-                    norek: '9876543210',
-                    nama: 'Klinik SehatLah'
-                },
-                DANA: {
-                    bank: 'Dana eWallet',
-                    norek: '081234567890',
-                    nama: 'Klinik SehatLah'
-                }
-            };
+        function updateRekeningInfo(select) {
+            const id = select.dataset.id;
+            const val = select.value;
+            const rekeningInfo = document.getElementById('rekeningInfo-' + id);
+            const bank = document.getElementById('namaBank-' + id);
+            const norek = document.getElementById('noRek-' + id);
+            const atasnama = document.getElementById('atasNama-' + id);
 
-            select{{ $appointment->id }}.addEventListener('change', function () {
-                const val = this.value;
-                if (dataRekening[val]) {
-                    rekeningInfo{{ $appointment->id }}.style.display = 'block';
-                    bank{{ $appointment->id }}.textContent = 'Metode: ' + dataRekening[val].bank;
-                    norek{{ $appointment->id }}.textContent = 'No: ' + dataRekening[val].norek;
-                    atasnama{{ $appointment->id }}.textContent = 'Atas Nama: ' + dataRekening[val].nama;
-                } else {
-                    rekeningInfo{{ $appointment->id }}.style.display = 'none';
-                }
+            if (dataRekening[val]) {
+                rekeningInfo.style.display = 'block';
+                bank.textContent = 'Metode: ' + dataRekening[val].bank;
+                norek.textContent = 'No: ' + dataRekening[val].norek;
+                atasnama.textContent = 'Atas Nama: ' + dataRekening[val].nama;
+            } else {
+                rekeningInfo.style.display = 'none';
+            }
+        }
+
+        // Attach listener to all selects
+        document.querySelectorAll('.payment-method').forEach(select => {
+            select.addEventListener('change', function () {
+                updateRekeningInfo(this);
             });
-        @endforeach
+
+            // If already selected (for page reload or collapse open), trigger once
+            if (select.value) {
+                updateRekeningInfo(select);
+            }
+        });
+
+        // Optional: Update info when collapse is shown (Bootstrap 5 event)
+        document.querySelectorAll('.collapse').forEach(collapseEl => {
+            collapseEl.addEventListener('shown.bs.collapse', function () {
+                const select = this.querySelector('.payment-method');
+                if (select) updateRekeningInfo(select);
+            });
+        });
     });
 </script>
 @endif

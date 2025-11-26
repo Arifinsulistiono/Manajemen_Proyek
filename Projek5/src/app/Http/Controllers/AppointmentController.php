@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\Appointment;
 use App\Models\Transaction;
 use App\Models\Dokter;
+use App\Mail\AppointmentApprovedMail;
+use App\Mail\AppointmentRejectedMail;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PaymentSuccessMail;
 
 class AppointmentController extends Controller
 {
@@ -148,8 +152,14 @@ class AppointmentController extends Controller
 
     $transaction->save();
 
-    return redirect()->route('appointment.payment.invoice', $id)->with('success', 'Pembayaran berhasil!');
+    // Tambahkan bagian ini untuk kirim email
+    $appointment = $transaction->appointment()->with('dokter')->first();
+    Mail::to($appointment->email)->send(new PaymentSuccessMail($appointment));
+
+    return redirect()->route('appointment.payment.invoice', $id)
+        ->with('success', 'Pembayaran berhasil dan email notifikasi telah dikirim!');
 }
+
 
 public function invoice($id)
 {
@@ -157,4 +167,31 @@ public function invoice($id)
     $pdf = Pdf::loadView('frontend.invoice', compact('appointment'));
     return $pdf->download('invoice_' . $appointment->id . '.pdf');
 }
+public function approve($id)
+{
+    $appointment = Appointment::findOrFail($id);
+    $appointment->status = 'approved';
+    $appointment->save();
+
+    // Kirim email notifikasi
+    Mail::to($appointment->email)->send(new AppointmentApprovedMail($appointment));
+
+    return redirect()->route('appointments.index')->with('success', 'Appointment berhasil disetujui dan email telah dikirim.');
+}
+
+
+public function reject($id)
+{
+    $appointment = Appointment::findOrFail($id);
+    $appointment->status = 'Rejected';
+    $appointment->save();
+
+    // Pastikan menggunakan email langsung dari $appointment
+    if ($appointment->email) {
+        Mail::to($appointment->email)->send(new AppointmentRejectedMail($appointment));
+    }
+
+    return redirect()->route('appointments.index')->with('success', 'Appointment ditolak dan email dikirim.');
+}
+
 }

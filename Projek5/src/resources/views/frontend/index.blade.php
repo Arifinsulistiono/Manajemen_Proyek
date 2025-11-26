@@ -28,7 +28,7 @@
     <div class="container-fluid header bg-primary p-0 mb-5">
         <div class="row g-0 align-items-center flex-column-reverse flex-lg-row">
             <div class="col-lg-6 p-5 wow fadeIn" data-wow-delay="0.1s">
-                <h1 class="display-4 text-white mb-5">Good Health Is The Root Of All Happiness</h1>
+                <h1 class="display-4 text-white mb-5">Semua Orang Berhak Untuk Sehat</h1>
                 <div class="row g-4">
                     <div class="col-sm-4">
                         <div class="border-start border-light ps-4">
@@ -113,17 +113,6 @@
                     </div>
                 </div>
 
-                <!-- Cek Laboratorium -->
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="service-item bg-white rounded shadow-sm h-100 p-4">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle mb-4" style="width: 60px; height: 60px;">
-                            <i class="fa fa-vial fs-4"></i>
-                        </div>
-                        <h5 class="mb-3">Cek Laboratorium</h5>
-                        <p>Pemeriksaan darah, urin, dan laboratorium dasar lainnya.</p>
-                    </div>
-                </div>
-
                 <!-- Rawat Luka Ringan -->
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.6s">
                     <div class="service-item bg-white rounded shadow-sm h-100 p-4">
@@ -132,6 +121,17 @@
                         </div>
                         <h5 class="mb-3">Perawatan Luka</h5>
                         <p>Penanganan luka ringan, perban, dan penggantian balutan.</p>
+                    </div>
+                </div>
+
+                <!-- Pemberian Obat -->
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="service-item bg-white rounded shadow-sm h-100 p-4">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle mb-4" style="width: 60px; height: 60px;">
+                            <i class="fa fa-pills fs-4"></i>
+                        </div>
+                        <h5 class="mb-3">Pemberian Obat</h5>
+                        <p>Pemberian obat-obatan sesuai resep dokter disertai edukasi cara pemakaian yang benar.</p>
                     </div>
                 </div>
             </div>
@@ -148,8 +148,9 @@
                 <div class="col-lg-6 feature-text py-5 wow fadeIn" data-wow-delay="0.1s">
                     <div class="p-lg-5 ps-lg-0">
                         <p class="d-inline-block border rounded-pill text-light py-1 px-4">Features</p>
-                        <h1 class="text-white mb-4">Why Choose Us</h1>
-                        <p class="text-white mb-4 pb-2">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo erat amet</p>
+                        <h1 class="text-white mb-4">Mengapa Memilih Kami</h1>
+                        <p class="text-white mb-4 pb-2">Kami berkomitmen memberikan pelayanan terbaik dengan mengutamakan profesionalisme, integritas, dan kepedulian terhadap setiap pasien. 
+                                                         Dengan dukungan tenaga ahli berpengalaman serta fasilitas yang memadai,kami memastikan Anda mendapatkan penanganan yang aman, nyaman, dan terpercaya.</p>
                         <div class="row g-4">
                             <div class="col-6">
                                 <div class="d-flex align-items-center">

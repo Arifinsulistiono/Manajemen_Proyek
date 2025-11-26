@@ -17,7 +17,10 @@ class DokterResource extends Resource
 {
     protected static ?string $model = Dokter::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user-circle';
+    protected static ?string $navigationLabel = 'Dokter';
+    protected static ?string $pluralModelLabel = 'Dokter';
+    protected static ?string $modelLabel = 'Dokter';
 
     public static function form(Form $form): Form
     {

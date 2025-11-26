@@ -21,6 +21,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
+use App\Filament\Admin\Widgets\IncomeChart;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -50,6 +51,8 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Admin/Widgets'), for: 'App\\Filament\\Admin\\Widgets')
             ->widgets([
                 \Awcodes\Overlook\Widgets\OverlookWidget::class,
+                \App\Filament\Admin\Widgets\IncomeChart::class, // Tambahan widget grafik pemasukan
+                \App\Filament\Admin\Widgets\MonthlyPatientChart::class,
             ])
             ->navigationGroups([
                 NavigationGroup::make()
