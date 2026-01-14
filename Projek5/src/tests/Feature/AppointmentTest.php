@@ -22,7 +22,8 @@ class AppointmentTest extends TestCase
             'nama' => 'Pasien A',
             'email' => 'pasien@test.com',
             'no_hp' => '08123456789',
-            'dokter_id' => $dokter->id
+            'dokter_id' => $dokter->id,
+            'tanggal' => now()->addDay()->toDateString()
         ]);
 
         $response->assertStatus(302);
